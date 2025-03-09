@@ -5,20 +5,20 @@ OneWire tsensor(A0);
 DallasTemperature sensors(&tsensor);
 
 bool cold = 0; // need cool?
-bool debug = 1; // debug?
+bool debug = 0; // debug?
 
-int potvalue[6] = {120, 150, 190, 250, 600, 1000}; // array potenciometer values
-int coldtemp[6] = {5, 4, 3, 2, 1, 0};              // array temp values
-
+int potvalue[6] = {20, 65, 200, 350, 700, 1000}; // array potenciometer values
+float coldtemp[6] = {6, 5, 4, 3, 2, 1};              // array temp values
 
 void setup() {
   pinMode(A1, INPUT);
   pinMode(A5, INPUT);
   pinMode(7, OUTPUT);  
   digitalWrite(7, LOW); // stop cooling
+  sensors.begin();
+
   if (debug == 1){
     Serial.begin(9600);
-    sensors.begin();
   }
 }
  
@@ -56,11 +56,15 @@ for (int i = 0; i < 6; i++) {
   } 
 }
 
-if (cold == 1)  // start cooling
+if (cold == 1){  // start cooling
   digitalWrite(7, HIGH);
-else  // stop cooling
+}
+// 
+else{  // stop cooling
   digitalWrite(7, LOW);
-
+}
 delay(2000);
+
+
 
 }
